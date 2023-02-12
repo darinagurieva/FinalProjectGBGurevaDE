@@ -1,0 +1,947 @@
+{
+	"info": {
+		"_postman_id": "019b7431-0394-4330-9b47-652988ab8e4d",
+		"name": "FinalProjectGB",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18346376"
+	},
+	"item": [
+		{
+			"name": "LoginTest - Valid",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);",
+							"});",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"token\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "GB202302d8ec18",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "0b014008cc",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://test-stand.gb.ru/gateway/login",
+					"protocol": "https",
+					"host": [
+						"test-stand",
+						"gb",
+						"ru"
+					],
+					"path": [
+						"gateway",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LoginTest1 - invalid username",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {",
+							"    pm.response.to.have.status(401);",
+							"});",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Invalid credentials\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"autotest1\",\n    \"password\": \"4956318935\"\n}"
+				},
+				"url": {
+					"raw": "https://test-stand.gb.ru/api/login",
+					"protocol": "https",
+					"host": [
+						"test-stand",
+						"gb",
+						"ru"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LoginTest - Invalid Pass",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {",
+							"    pm.response.to.have.status(401);",
+							"});",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Invalid credentials\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"autotest\",\n    \"password\": \"4956318931\"\n}"
+				},
+				"url": {
+					"raw": "https://test-stand.gb.ru/api/login",
+					"protocol": "https",
+					"host": [
+						"test-stand",
+						"gb",
+						"ru"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "MyPosts - ASC, page1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"id\");",
+							"});",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"title\");",
+							"});",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"description\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "{{X-Auth-Token}}",
+						"value": "{{token}}",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "X-Auth-Token",
+							"value": "10fb5777797ab0ec12cd5ce6ed7762eb",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://test-stand.gb.ru/api/posts?sort=createdAt&order=ASC&page=1",
+					"protocol": "https",
+					"host": [
+						"test-stand",
+						"gb",
+						"ru"
+					],
+					"path": [
+						"api",
+						"posts"
+					],
+					"query": [
+						{
+							"key": "sort",
+							"value": "createdAt"
+						},
+						{
+							"key": "order",
+							"value": "ASC"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "MyPosts2 - page2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"prevpage=4\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.meta).to.include({ prevPage: 1 });",
+							"});",
+							"",
+							"pm.test(\"prevpage=4\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.meta).to.include({ nextPage: 3 });",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "{{X-Auth-Token}}",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://test-stand.gb.ru/api/posts?sort=createdAt&order=DESC&page=2",
+					"protocol": "https",
+					"host": [
+						"test-stand",
+						"gb",
+						"ru"
+					],
+					"path": [
+						"api",
+						"posts"
+					],
+					"query": [
+						{
+							"key": "sort",
+							"value": "createdAt"
+						},
+						{
+							"key": "order",
+							"value": "DESC"
+						},
+						{
+							"key": "page",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "MyPosts3 - page1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"nextpage=2\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.meta).to.include({ nextPage: 2 });",
+							"});",
+							"",
+							"pm.test(\"nextpage=2\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.meta).to.include({ prevPage: null });",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "{{X-Auth-Token}}",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://test-stand.gb.ru/api/posts?sort=createsAt&page=1&order=ASC",
+					"protocol": "https",
+					"host": [
+						"test-stand",
+						"gb",
+						"ru"
+					],
+					"path": [
+						"api",
+						"posts"
+					],
+					"query": [
+						{
+							"key": "sort",
+							"value": "createsAt"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "order",
+							"value": "ASC"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "MyPosts4 - orderASC",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"2023-02-12T15:02:03+00:00\");",
+							"});",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"2023-02-12T15:03:10+00:00\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "{{X-Auth-Token}}",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://test-stand.gb.ru/api/posts?order=ASC&sort=createdAt&page=2",
+					"protocol": "https",
+					"host": [
+						"test-stand",
+						"gb",
+						"ru"
+					],
+					"path": [
+						"api",
+						"posts"
+					],
+					"query": [
+						{
+							"key": "order",
+							"value": "ASC"
+						},
+						{
+							"key": "sort",
+							"value": "createdAt"
+						},
+						{
+							"key": "page",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "MyPosts - Page=30000",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"[]\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "{{X-Auth-Token}}",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://test-stand.gb.ru/api/posts?order=ASC&page=30000&sort=createdAt",
+					"protocol": "https",
+					"host": [
+						"test-stand",
+						"gb",
+						"ru"
+					],
+					"path": [
+						"api",
+						"posts"
+					],
+					"query": [
+						{
+							"key": "order",
+							"value": "ASC"
+						},
+						{
+							"key": "page",
+							"value": "30000"
+						},
+						{
+							"key": "sort",
+							"value": "createdAt"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "MyPosts - Page=null",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "{{X-Auth-Token}}",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://test-stand.gb.ru/api/posts?order=ASC&sort=createdAt&page=null",
+					"protocol": "https",
+					"host": [
+						"test-stand",
+						"gb",
+						"ru"
+					],
+					"path": [
+						"api",
+						"posts"
+					],
+					"query": [
+						{
+							"key": "order",
+							"value": "ASC"
+						},
+						{
+							"key": "sort",
+							"value": "createdAt"
+						},
+						{
+							"key": "page",
+							"value": "null"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "NotMyPosts - ASC, page1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"authorId\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "{{X-Auth-Token}}",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://test-stand.gb.ru/api/posts?owner=notMe&order=ASC&page=1&sort=createdAt",
+					"protocol": "https",
+					"host": [
+						"test-stand",
+						"gb",
+						"ru"
+					],
+					"path": [
+						"api",
+						"posts"
+					],
+					"query": [
+						{
+							"key": "owner",
+							"value": "notMe"
+						},
+						{
+							"key": "order",
+							"value": "ASC"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "sort",
+							"value": "createdAt"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "NotMyPosts - page5",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"prevpage=4\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.meta).to.include({ prevPage: 4 });",
+							"});",
+							"",
+							"pm.test(\"prevpage=4\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.meta).to.include({ nextPage: 6 });",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "{{X-Auth-Token}}",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://test-stand.gb.ru/api/posts?owner=notMe&order=ASC&sort=createdAt&page=5",
+					"protocol": "https",
+					"host": [
+						"test-stand",
+						"gb",
+						"ru"
+					],
+					"path": [
+						"api",
+						"posts"
+					],
+					"query": [
+						{
+							"key": "owner",
+							"value": "notMe"
+						},
+						{
+							"key": "order",
+							"value": "ASC"
+						},
+						{
+							"key": "sort",
+							"value": "createdAt"
+						},
+						{
+							"key": "page",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "NotMyPosts - page1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"nextpage=2\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.meta).to.include({ nextPage: 2 });",
+							"});",
+							"",
+							"pm.test(\"nextpage=2\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.meta).to.include({ prevPage: null });",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "{{X-Auth-Token}}",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://test-stand.gb.ru/api/posts?owner=notMe&order=ASC&sort=createdAt&page=1",
+					"protocol": "https",
+					"host": [
+						"test-stand",
+						"gb",
+						"ru"
+					],
+					"path": [
+						"api",
+						"posts"
+					],
+					"query": [
+						{
+							"key": "owner",
+							"value": "notMe"
+						},
+						{
+							"key": "order",
+							"value": "ASC"
+						},
+						{
+							"key": "sort",
+							"value": "createdAt"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "NotMyPosts - orderASC",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"2022-09-22T23:03:31+00:00\");",
+							"});",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"2022-09-24T14:02:36+00:00\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://test-stand.gb.ru/api/posts?owner=notMe&sort=createdAt&order=ASC&page=2",
+					"protocol": "https",
+					"host": [
+						"test-stand",
+						"gb",
+						"ru"
+					],
+					"path": [
+						"api",
+						"posts"
+					],
+					"query": [
+						{
+							"key": "owner",
+							"value": "notMe"
+						},
+						{
+							"key": "sort",
+							"value": "createdAt"
+						},
+						{
+							"key": "order",
+							"value": "ASC"
+						},
+						{
+							"key": "page",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "NotMyPosts - NoPage",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"[]\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://test-stand.gb.ru/api/posts?owner=notMe&sort=createdAt&order=DESC&page=30000",
+					"protocol": "https",
+					"host": [
+						"test-stand",
+						"gb",
+						"ru"
+					],
+					"path": [
+						"api",
+						"posts"
+					],
+					"query": [
+						{
+							"key": "owner",
+							"value": "notMe"
+						},
+						{
+							"key": "sort",
+							"value": "createdAt"
+						},
+						{
+							"key": "order",
+							"value": "DESC"
+						},
+						{
+							"key": "page",
+							"value": "30000"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "NotMyPosts - Page=null",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://test-stand.gb.ru/api/posts?owner=notMe&sort=createdAt&order=ASC&page=null",
+					"protocol": "https",
+					"host": [
+						"test-stand",
+						"gb",
+						"ru"
+					],
+					"path": [
+						"api",
+						"posts"
+					],
+					"query": [
+						{
+							"key": "owner",
+							"value": "notMe"
+						},
+						{
+							"key": "sort",
+							"value": "createdAt"
+						},
+						{
+							"key": "order",
+							"value": "ASC"
+						},
+						{
+							"key": "page",
+							"value": "null"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "4956318935",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "autotest",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "X-Auth-Token",
+			"value": "10fb5777797ab0ec12cd5ce6ed7762eb",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "10fb5777797ab0ec12cd5ce6ed7762eb"
+		}
+	]
+}
